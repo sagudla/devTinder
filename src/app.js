@@ -2,32 +2,16 @@ const express = require("express");
 
 const app = express();
 
-// API request -> middleware chain -> request/response handler
-app.use("/admin", [(req, res, next) => {
-    console.log("Handler 1");
-    next();
-}, (req, res, next) => {
-    console.log("Handler 2");
-    next();
-    //res.send("Handler 2");
-}, (req, res, next) => {
-    console.log("Handler 3");
-    //next();
-    res.send("Handler 3");
-
-}]);
-
-app.use("/user", (req, res) => {
-    res.send("User details fetched");
+app.get("/admin", (req, res) => {
+    console.log(req.query);
+    res.send(req.query);
 });
 
-app.use("/a{b}c", (req, res) => { 
-    res.send("ac"); 
+app.get("/admin/:id/:name", (req, res) => {
+    console.log(req.params);
+    res.send(req.params);
 });
 
-// app.use("/", (req, res) => {
-//     res.send("Api Hitted");
-// });
-app.listen(3000, () => {
-    console.log("Server listening on port 3000");
+app.listen(7777, () => {
+    console.log("Server listening on port 7777");
 });
