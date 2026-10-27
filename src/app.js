@@ -20,15 +20,19 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 // app.use("/admin", (err, req, res, next) => { 
 //     res.status(err.statusCode).send(err.message);
 // });
-
+app.use(express.json());
 app.post("/signup", async (req, res) => {
+    // console.log(req);
+    // //console.log(JSON.parse(req.body));
+    // let rawData = "";
+    // req.on("data", (chunk) => {
+    //     rawData += chunk;
+    //     console.log(rawData);
+    // });
+    // req.body = JSON.parse(rawData); 
+    // console.log(req.body);
     // Creating ad new unstance to user model
-    const user = new User({
-        firstName: "sagudla",
-        email: "gudlasanthoshkumar112@gmail.com",
-        mobile: "8096790481",
-        gender: "Male"
-    });
+    const user = new User(req.body);
     try {
         await user.save();
         res.send("User Added Successfully");
