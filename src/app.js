@@ -57,6 +57,27 @@ app.get("/user", async (req, res) => {
         res.status(404).send("Some thing went wrong");
     }
 });
+// Delete -User API
+app.delete("/user", async (req, res) => {
+    console.log(req.body.id);
+    try {
+        const user = await User.findByIdAndDelete(req.body.id);
+        console.log(user);
+        res.send("User deleted successfully");
+    } catch (error)  {
+        res.status(404).send("Some thing went wrong");
+    }
+});
+// update -User API
+app.patch("/user", async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.body.id, req.body, {returnDocument: "before", lean: false});
+        console.log(user);
+        res.send("User updated successfully");
+    } catch (error)  {
+        res.status(404).send("Some thing went wrong");
+    }
+});
 // GET feed API
 app.get("/feed", async (req, res) => {
     try {
