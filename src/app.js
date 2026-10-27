@@ -21,6 +21,7 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 //     res.status(err.statusCode).send(err.message);
 // });
 app.use(express.json());
+
 app.post("/signup", async (req, res) => {
     // console.log(req);
     // //console.log(JSON.parse(req.body));
@@ -41,6 +42,35 @@ app.post("/signup", async (req, res) => {
     }   
 
 })
+// GET-User API
+app.get("/user", async (req, res) => {
+    console.log(req.body.email);
+    try {
+        const user = await User.findOne({email: req.body.email}, 'email mobile');
+        console.log(user);
+        if (user.length === 0) {
+            res.status(400).send("User not found")
+        } else {
+            res.send(user);
+        }
+    } catch (error)  {
+        res.status(404).send("Some thing went wrong");
+    }
+});
+// GET feed API
+app.get("/feed", async (req, res) => {
+    try {
+        const users = await User.find({});
+        console.log(users);
+        if (users.length === 0) {
+            res.status(400).send("User not found")
+        } else {
+            res.send(users);
+        }
+    } catch (error)  {
+        res.status(404).send("Some thing went wrong");
+    }
+});
 app.get("/admin/dashboard", authMiddleware, (req, res) => {
   res.send("Details fetched");
 });
