@@ -38,7 +38,7 @@ app.post("/signup", async (req, res) => {
         await user.save();
         res.send("User Added Successfully");
     } catch(error) {
-        res.status(400).send("Error adding user");
+        res.status(400).send("Error adding user: " + error.message);
     }   
 
 })
@@ -71,11 +71,12 @@ app.delete("/user", async (req, res) => {
 // update -User API
 app.patch("/user", async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.body.id, req.body, {returnDocument: "before", lean: false});
+        const user = await User.findByIdAndUpdate(req.body.id, req.body, {returnDocument: "before", lean: false, runValidators: true});
+        //runValidators -  to run validate method in schema
         console.log(user);
         res.send("User updated successfully");
     } catch (error)  {
-        res.status(404).send("Some thing went wrong");
+        res.status(404).send("Error updating user: " + error.message);
     }
 });
 // GET feed API
