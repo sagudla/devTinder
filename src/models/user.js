@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        trim: true
     },
     mobile: {
         type: String
@@ -27,6 +28,11 @@ const userSchema = new mongoose.Schema({
                 throw new Error("Add Correct Gender!")
             }
         }
+    },
+    age: {
+        type: Number,
+        required: true,
+        min: 18
     },
     about: {
         type: String,

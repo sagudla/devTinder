@@ -35,6 +35,9 @@ app.post("/signup", async (req, res) => {
     // Creating ad new unstance to user model
     const user = new User(req.body);
     try {
+        // if (req.body.skills.length > 4) {
+        //     throw new Error('Only 4 skills allowed');
+        // }
         await user.save();
         res.send("User Added Successfully");
     } catch(error) {
@@ -69,9 +72,19 @@ app.delete("/user", async (req, res) => {
     }
 });
 // update -User API
-app.patch("/user", async (req, res) => {
+app.patch("/user/:id", async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.body.id, req.body, {returnDocument: "before", lean: false, runValidators: true});
+        console.log( Object.keys(req.body));
+        const ALLOWED_FIELDS = ["skills", "about", "gender", "age"];
+        const isUpdateAllowed = Object.keys(req.body).every((field) => ALLOWED_FIELDS.includes(field));
+        console.log( Object.keys(req.body));
+        if (!isUpdateAllowed) {
+            throw new Error('Update allowed only for ["skills", "about", "gender", "age"]');
+        }
+        if (req.body.skills.length > 4) {
+            throw new Error('Only 4 skills allowed');
+        }
+        const user = await User.findByIdAndUpdate(req.params?.id, req.body, {returnDocument: "before", lean: false, runValidators: true});
         //runValidators -  to run validate method in schema
         console.log(user);
         res.send("User updated successfully");
