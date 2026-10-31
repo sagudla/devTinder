@@ -4,3 +4,5 @@
 - fetch dummy token(req.cookie) in profile API
 - create jwt in login API after emial and password validation
 - verify hwt in profile API 
+- Create Auth middleware
+- create userschema methods for password validate and jet token creation

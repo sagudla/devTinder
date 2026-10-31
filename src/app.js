@@ -6,9 +6,8 @@ const app = express();
 const dns = require("dns");
 dns.setServers(["8.8.8.8", "1.1.1.1"]); 
 const {validateSignup} = require("./utils/signupValidator");
-const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
+
 
 // we can create a auth middleware to check for all the admin routes by using app.use or a new file and we can use directly that in routes.
 // app.use("/admin", (req, res, next) => {  --> This should be at top if we don't use any global error handler ..if we use it should at bottom
@@ -54,12 +53,12 @@ app.post("/login", async (req, res) => {
         if (!user) {
             throw new Error("Email Invalid!");
         }
-        const ispasswordValid = await bcrypt.compare(password, user.password);
+        const ispasswordValid = await user.validatePassword(password);
         console.log(ispasswordValid);
         if (!ispasswordValid) {
             throw new Error("Password Invalid!");
         }
-        const token = await jwt.sign({id: user._id}, "secret");
+        const token = await user.getJWT();
         console.log(token);
         res.cookie("access_token", token);
         res.send("Login Successfull");
