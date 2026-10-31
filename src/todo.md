@@ -1,0 +1,6 @@
+- install cookie-parser
+- cookieParser middleware
+- send dummy token(res.cookie) to user
+- fetch dummy token(req.cookie) in profile API
+- create jwt in login API after emial and password validation
+- verify hwt in profile API 

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -15,7 +16,15 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         lowercase: true,
-        trim: true
+        trim: true,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error("Email is invalid");
+            }
+        }
+    },
+    password: {
+        type: String
     },
     mobile: {
         type: String
@@ -31,7 +40,7 @@ const userSchema = new mongoose.Schema({
     },
     age: {
         type: Number,
-        required: true,
+        //required: true,
         min: 18
     },
     about: {
@@ -40,6 +49,15 @@ const userSchema = new mongoose.Schema({
     },
     skills: {
         type: [String]
+    },
+    photoUrl: {
+        type: String,
+        default: "https://fireart.studio/wp-content/uploads/2021/11/browserpreview-1600-1.gif",
+        validate(value) {
+            if (!validator.isURL(value)) {
+                throw new Error("Invalid photo url");
+            }
+        }
     }
 }, {
     timestamps: true
