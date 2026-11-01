@@ -1,79 +1,23 @@
-const express = require("express");
-const { authMiddleware } = require("./middlewares/auth");
-const  connectDB  = require("./config/database");
-const User  = require("./models/user");
-const app = express();
 const dns = require("dns");
 dns.setServers(["8.8.8.8", "1.1.1.1"]); 
-const {validateSignup} = require("./utils/signupValidator");
+
+const express = require("express");
 const cookieParser = require('cookie-parser');
+const  connectDB  = require("./config/database");
+const User  = require("./models/user");
+const authRouter = require("./routes/auth");
+const profileRouter = require("./routes/profile");
+const userRouter =  require("./routes/user");
 
+const app = express();
 
-// we can create a auth middleware to check for all the admin routes by using app.use or a new file and we can use directly that in routes.
-// app.use("/admin", (req, res, next) => {  --> This should be at top if we don't use any global error handler ..if we use it should at bottom
-//     const token = "xyz";
-//     const isAdminAuthenticated = token === "xyz";
-//     if (isAdminAuthenticated) {
-//        next();
-//     } else {
-//         res.status(400).send("Error. Please try again");
-//     }
-// });
-// app.use("/admin", (err, req, res, next) => { 
-//     res.status(err.statusCode).send(err.message);
-// });
+app.use(express.json()); // middleware to parse JSON
+app.use(cookieParser()); // middleware to parse cookies
 
-app.use(express.json());
-app.use(cookieParser());
-app.post("/signup", async (req, res) => {
-    try {
-        //validator function
-        validateSignup(req);
-        const {firstName, lastName, email, password} = req.body;
-        const passwordHash = await bcrypt.hash(password, 10);
-        console.log(passwordHash);
-        const user = new User({
-            firstName,
-            lastName,
-            email,
-            password: passwordHash
-        });
-        await user.save();
-        res.send("User Added Successfully");
-    } catch(error) {
-        res.status(400).send("Error adding user: " + error.message);
-    }   
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", userRouter);
 
-});
-//Login API
-app.post("/login", async (req, res) => {
-    try {
-        const {email, password} = req.body;
-        const user = await User.findOne({email: email});
-        if (!user) {
-            throw new Error("Email Invalid!");
-        }
-        const ispasswordValid = await user.validatePassword(password);
-        console.log(ispasswordValid);
-        if (!ispasswordValid) {
-            throw new Error("Password Invalid!");
-        }
-        const token = await user.getJWT();
-        console.log(token);
-        res.cookie("access_token", token);
-        res.send("Login Successfull");
-    } catch(err) {
-         res.status(400).send("Error login user: " + err.message);
-    }
-})
-app.get("/profile", authMiddleware, async (req, res) => {
-    try {
-        const user = req.user;
-        res.send(user);
-    } catch(err) {
-        res.status(400).send("Error fetching profile details: " + err.message);
-    }
-});
 // GET-User API
 app.get("/user", async (req, res) => {
     console.log(req.body.email);
@@ -141,18 +85,18 @@ app.get("/feed", async (req, res) => {
         res.status(404).send("Some thing went wrong: " + error.message);
     }
 });
-app.get("/admin/dashboard", authMiddleware, (req, res) => {
-  res.send("Details fetched");
-});
+// app.get("/admin/dashboard", authMiddleware, (req, res) => {
+//   res.send("Details fetched");
+// });
 
-app.get("/admin/orders", authMiddleware, (req, res) => {
-   res.send("Order Details fetched");
-});
-//This should at last to handle errors properly which are thrown in middleware.
-app.use("/admin", (err, req, res, next) => {
-    console.log("Caught Here");
-    res.status(err.statusCode).send(err.message);
-});
+// app.get("/admin/orders", authMiddleware, (req, res) => {
+//    res.send("Order Details fetched");
+// });
+// //This should at last to handle errors properly which are thrown in middleware.
+// app.use("/admin", (err, req, res, next) => {
+//     console.log("Caught Here");
+//     res.status(err.statusCode).send(err.message);
+// });
 
 connectDB().then(() => {
     console.log("Db Connected");

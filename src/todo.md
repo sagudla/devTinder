@@ -6,3 +6,11 @@
 - verify hwt in profile API 
 - Create Auth middleware
 - create userschema methods for password validate and jet token creation
+
+- ExploreTinder
+- Listout APIs
+- Create separate routes to griuping APIs
+- Express.router
+- Create routes folder and create routers for auth, profile and requests
+- Export routers
+- import in app.js and use each router as middleware
