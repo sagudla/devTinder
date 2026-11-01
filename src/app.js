@@ -15,7 +15,7 @@ app.use(express.json()); // middleware to parse JSON
 app.use(cookieParser()); // middleware to parse cookies
 
 app.use("/", authRouter);
-app.use("/", profileRouter);
+app.use("/profile", profileRouter);
 app.use("/", userRouter);
 
 // GET-User API

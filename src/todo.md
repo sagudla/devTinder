@@ -14,3 +14,7 @@
 - Create routes folder and create routers for auth, profile and requests
 - Export routers
 - import in app.js and use each router as middleware
+
+- Implement logout API
+- Create profile APIs(Edit Profile, Edit Password)
+- Update profile routes in app.js(all "/profile" routes now will go to profile router)

@@ -1,5 +1,5 @@
 const express = require("express");
-const {validateSignup} = require("../utils/signupValidator");
+const {validateSignup} = require("../utils/validator");
 const bcrypt = require('bcrypt');
 const User  = require("../models/user");
 
@@ -35,20 +35,22 @@ authRouter.post("/login", async (req, res) => {
             throw new Error("Email Invalid!");
         }
         const ispasswordValid = await user.validatePassword(password);
-        console.log(ispasswordValid);
         if (!ispasswordValid) {
             throw new Error("Password Invalid!");
         }
         const token = await user.getJWT();
-        console.log(token);
         res.cookie("access_token", token, {
-            maxAge: 1 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-            httpOnly: true
+            maxAge: 1 * 24 * 60 * 60 * 1000
         });
         res.send("Login Successfull");
     } catch(err) {
          res.status(400).send("Error login user: " + err.message);
     }
+});
+
+authRouter.post("/logout", (req, res) => {
+    res.clearCookie("access_token");
+    res.send("Logout successfull!");
 });
 
 module.exports = authRouter;
