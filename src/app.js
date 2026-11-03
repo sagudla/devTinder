@@ -7,6 +7,7 @@ const  connectDB  = require("./config/database");
 const User  = require("./models/user");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/request");
 const userRouter =  require("./routes/user");
 
 const app = express();
@@ -16,7 +17,7 @@ app.use(cookieParser()); // middleware to parse cookies
 
 app.use("/", authRouter);
 app.use("/profile", profileRouter);
-app.use("/", userRouter);
+app.use("/request", requestRouter);
 
 // GET-User API
 app.get("/user", async (req, res) => {

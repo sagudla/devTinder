@@ -18,3 +18,12 @@
 - Implement logout API
 - Create profile APIs(Edit Profile, Edit Password)
 - Update profile routes in app.js(all "/profile" routes now will go to profile router)
+
+- Create new connection reqeust schem
+- New model
+- New API for request send
+- Schema validation for status enum
+- API level validations to cover all the cases for secured API contract
+- Schema pre validation
+- compound index for frequest query and index and uses
+- explore mongodb index and mongoos docs

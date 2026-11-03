@@ -14,7 +14,7 @@
 - POST /request/review/accepted/:requestID
 - POST /request/review/rejected/:requestID
 
-#3useRouter
+#useRouter
 - GET /user/connetctions
 - GET /user/requests/recieved
 - GET /user/feed 
