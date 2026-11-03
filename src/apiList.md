@@ -9,14 +9,14 @@
 - PATCH /profil/password
 
 ##connectionRequestRouter
-- POST /request/send/intrested/:userID
-- POST /request/send/ignored/:userID
-- POST /request/review/accepted/:requestID
-- POST /request/review/rejected/:requestID
+- POST /request/send/:status/:userID ["intrested", "ignored"]
+
+- POST /request/review/:status/:requestID ["accepted", "rejected"]
+
 
 #useRouter
-- GET /user/connetctions
 - GET /user/requests/recieved
+- GET /user/connetctions
 - GET /user/feed 
 
 

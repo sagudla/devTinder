@@ -18,7 +18,7 @@ app.use(cookieParser()); // middleware to parse cookies
 app.use("/", authRouter);
 app.use("/profile", profileRouter);
 app.use("/request", requestRouter);
-
+app.use("/user", userRouter);
 // GET-User API
 app.get("/user", async (req, res) => {
     console.log(req.body.email);

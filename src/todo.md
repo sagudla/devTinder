@@ -27,3 +27,6 @@
 - Schema pre validation
 - compound index for frequest query and index and uses
 - explore mongodb index and mongoos docs
+- ref & populate
+- POST vs GET seletcion
+- Connections recieved API in user router
