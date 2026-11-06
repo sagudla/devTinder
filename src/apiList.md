@@ -17,7 +17,7 @@
 #useRouter
 - GET /user/requests/recieved
 - GET /user/connetctions
-- GET /user/feed 
+- GET /user/feed  
 
 
 - Satatus: intrested,ignored,accepted,rejected

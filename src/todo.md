@@ -30,3 +30,17 @@
 - ref & populate
 - POST vs GET seletcion
 - Connections recieved API in user router
+
+- Create GET user/feed API 
+  - ignore self view
+  - ignore Connection requests (intrested/ignored/rejected)
+  - ignore connections (accepted) 
+  - there should be no record with fromUserId is he/her or toUserId id he/her
+
+  - /feed?page=0&limit=10 
+
+  - i =n mongo we have skip and limit
+  - skip().limit() 1-10 - 0 - l0 - 10
+                 - 11-20 - 10
+
+                 - skip = (page-1)*limit
