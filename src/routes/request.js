@@ -11,7 +11,7 @@ requestRouter.post("/send/:status/:userID", authMiddleware, async (req, res) => 
         const toUserId = req.params.userID;
         const status = req.params.status;
 
-        const ALLOWED_STATUS = ["intrested", "ignored"];
+        const ALLOWED_STATUS = ["interested", "ignored"];
 
         const user = await User.findById(toUserId); 
         if (!user) {
@@ -34,7 +34,7 @@ requestRouter.post("/send/:status/:userID", authMiddleware, async (req, res) => 
 
         const connectionRequest = new ConnectionRequest({fromUserId, toUserId, status});
         const data = await connectionRequest.save();
-        res.json({message: `${req.user.firstName} is ${status === 'intrested' ? 'interested' : 'not interested'} in ${user.firstName}`, data: data});
+        res.json({message: `${req.user.firstName} is ${status === 'interested' ? 'interested' : 'not interested'} in ${user.firstName}`, data: data});
 
     } catch(error) {
         res.status(400).send("Error: " + error.message);
@@ -53,7 +53,7 @@ requestRouter.post("/review/:status/:requestID", authMiddleware, async (req, res
         const connectionRequest = await ConnectionRequest.findOne({
             _id: requestID,
             toUserId: user._id,
-            status: "intrested"
+            status: "interested"
         });
         if (!connectionRequest) {
              return res.status(400).json({message: "No Connection Request exists"});

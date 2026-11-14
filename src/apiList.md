@@ -9,7 +9,7 @@
 - PATCH /profil/password
 
 ##connectionRequestRouter
-- POST /request/send/:status/:userID ["intrested", "ignored"]
+- POST /request/send/:status/:userID ["interested", "ignored"]
 
 - POST /request/review/:status/:requestID ["accepted", "rejected"]
 
@@ -20,4 +20,4 @@
 - GET /user/feed  
 
 
-- Satatus: intrested,ignored,accepted,rejected
+- Status: interested,ignored,accepted,rejected

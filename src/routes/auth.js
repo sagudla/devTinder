@@ -18,8 +18,12 @@ authRouter.post("/signup", async (req, res) => {
             email,
             password: passwordHash
         });
-        await user.save();
-        res.send("User Added Successfully");
+        const newAddedUser = await user.save();
+        const token = await newAddedUser.getJWT();
+        res.cookie("access_token", token, {
+            maxAge: 1 * 24 * 60 * 60 * 1000
+        });
+        res.send(newAddedUser);
     } catch(error) {
         res.status(400).send("Error adding user: " + error.message);
     }   

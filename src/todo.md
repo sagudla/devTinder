@@ -33,7 +33,7 @@
 
 - Create GET user/feed API 
   - ignore self view
-  - ignore Connection requests (intrested/ignored/rejected)
+  - ignore Connection requests (interested/ignored/rejected)
   - ignore connections (accepted) 
   - there should be no record with fromUserId is he/her or toUserId id he/her
 
