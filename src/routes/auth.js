@@ -42,7 +42,7 @@ authRouter.post("/login", async (req, res) => {
         res.cookie("access_token", token, {
             maxAge: 1 * 24 * 60 * 60 * 1000
         });
-        res.send("Login Successfull");
+        res.send(user);
     } catch(err) {
          res.status(400).send("Error login user: " + err.message);
     }

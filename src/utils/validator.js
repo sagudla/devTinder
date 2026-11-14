@@ -12,7 +12,7 @@ const validateSignup = (req, res, next) => {
 }
 
 const validateEditProfile = (req) => {
-    const ALLOWED_FIELDS = ["skills", "about", "gender", "age", "photoUrl"];
+    const ALLOWED_FIELDS = ["firstName", "lastName", "skills", "about", "gender", "age", "photoUrl"];
     const isUpdateAllowed = Object.keys(req.body).every((field) => ALLOWED_FIELDS.includes(field));
     if (!isUpdateAllowed) {
         throw new Error('Update allowed only for ["skills", "about", "gender", "age"]');

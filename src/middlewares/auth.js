@@ -5,7 +5,7 @@ const authMiddleware = async (req, res, next) => {
     try {
         const {access_token} = req.cookies;
         if (!access_token)  {
-            throw new Error("Invalid token");
+            return res.status(401).send("Unauthorised");
         }
         const decodedMessage = jwt.verify(access_token, "secret");
         const {id} = decodedMessage;

@@ -9,7 +9,6 @@ profileRouter.get("/view", authMiddleware, async (req, res) => {
     try {
         const user = req.user;
         res.send(user);
-        console.log(user);
     } catch(err) {
         res.status(400).send("Error fetching profile details: " + err.message);
     }

@@ -4,7 +4,7 @@ const User  = require("../models/user");
 const ConnectionRequest = require("../models/connectionRequest");
 
 const userRouter = express.Router();
-const SAFE_FIELDS = "firstName lastName age photoUrl skills gender";
+const SAFE_FIELDS = "firstName lastName age photoUrl skills gender about";
 
 //Get all pending requests of loggedin User
 userRouter.get("/requests/recieved", authMiddleware, async (req, res) => {
