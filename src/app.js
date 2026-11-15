@@ -1,6 +1,6 @@
 const dns = require("dns");
 dns.setServers(["8.8.8.8", "1.1.1.1"]); 
-
+require('dotenv').config()
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const  connectDB  = require("./config/database");
@@ -104,9 +104,9 @@ app.get("/feed", async (req, res) => {
 
 connectDB().then(() => {
     console.log("Db Connected");
-    app.listen(7777, () => {
+    app.listen(process.env.PORT, () => {
         console.log("Server listening on port 7777");
     });
 }).catch((error) => {
-    console.log(error);
+    console.log(error.message);
 })
